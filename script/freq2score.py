@@ -17,13 +17,13 @@ def get_binding_score(df, rep):
                  df[rep+'_t1_gate3_freq']*0.75  + df[rep+'_t1_gate4_freq']*1
     binding_norm_factor = df[rep+'_t1_gate1_freq'] + df[rep+'_t1_gate2_freq'] + \
                  df[rep+'_t1_gate3_freq'] + df[rep+'_t1_gate4_freq']
-    df[rep+"_binding_score"] = (binding_weight/binding_norm_factor)/df[rep+"_exp_score"]
+    df[rep+"_binding_score"] = binding_weight/binding_norm_factor
     return df 
 
 
 def main():
-  inputfile = 'result/mut_freq_2*10-5.tsv'
-  outfile = 'result/mut_scores_2*10-5.tsv'
+  inputfile = 'result/mut_freq.tsv'
+  outfile = 'result/mut_scores.tsv'
   freq_cutoff = 0.00001
   freq_df = pd.read_csv(inputfile, sep = '\t')
 
