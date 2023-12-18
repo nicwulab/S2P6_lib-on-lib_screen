@@ -37,26 +37,18 @@
       - [./result/mut_count.tsv](./result/mut_count.tsv)<br />
     - Output files:<br />
       - [./result/mut_freq.tsv](./result/mut_freq.tsv)<br />
-      - [./result/mut_freq_1*10-5.tsv](./result/mut_freq_1*10-5.tsv)<br /> 
-      - [./result/mut_freq_2*10-5.tsv](./result/mut_freq_2*10-5.tsv)<br /> 
 
 ### Calculate the expression score, expression pos/neg, and binding score
 ``python3 script/freq2score.py``<br />
     - Input file:<br />
       - [./result/mut_freq.tsv](./result/mut_freq.tsv)<br />
-      - [./result/mut_freq_1*10-5.tsv](./result/mut_freq_1*10-5.tsv)<br /> 
-      - [./result/mut_freq_2*10-5.tsv](./result/mut_freq_2*10-5.tsv)<br /> 
     - Output files:<br />
       - [./result/mut_scores.tsv](./result/mut_scores.tsv)<br />
-      - [./result/mut_scores_1*10-5.tsv](./result/mut_scores_1*10-5.tsv)<br /> 
-      - [./result/mut_scores_2*10-5.tsv](./result/mut_scores_2*10-5.tsv)<br /> 
 
 ### Plot correlation between expression score and binding scores
 ``python3 script/plot_replicate_qc.py``<br />
     - Input file:<br />
       - [./result/mut_scores.tsv](./result/mut_scores.tsv)<br />
-      - [./result/mut_scores_1*10-5.tsv](./result/mut_scores_1*10-5.tsv)<br /> 
-      - [./result/mut_scores_2*10-5.tsv](./result/mut_scores_2*10-5.tsv)<br /> 
     - Output files:<br />
       - [./graph/QC/Binding_score_correlation.html](./graph/QC/Binding_score_correlation.html)<br />
       - [./graph/QC/Binding_score_correlation_1*10-5.html](./graph/QC/Binding_score_correlation_1*10-5.html)<br />
@@ -65,6 +57,13 @@
       - [./graph/QC/Expression_score_correlation_1*10-5.html](./graph/QC/Expression_score_correlation_1*10-5.html)<br />
       - [./graph/QC/Expression_score_correlation_2*10-5.html](./graph/QC/Expression_score_correlation_2*10-5.html)<br />
 
-      
-
+### Plot correlation between binding scores and effect of different frequency cutoffs
+``Rscript script/plot_QC.R``<br />
+    - Input file:<br />
+      - [./result/mut_scores.tsv](./result/mut_scores.tsv)
+    - Output files:<br />
+      - [./graph/QC_cutoff_freq_vs_cor.png](./graph/QC_cutoff_freq_vs_cor.png)
+      - [./graph/QC_cutoff_freq_vs_variant_num.png](./graph/QC_cutoff_freq_vs_variant_num.png)
+      - [./graph/QC_replicate_cor.png](./graph/QC_replicate_cor.png)
+    
       
