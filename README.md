@@ -60,10 +60,10 @@
 ### Plot correlation between binding scores and effect of different frequency cutoffs
 ``Rscript script/plot_QC.R``<br />
     - Input file:<br />
-      - [./result/mut_scores.tsv](./result/mut_scores.tsv)
+      - [./result/mut_scores.tsv](./result/mut_scores.tsv)<br />
     - Output files:<br />
-      - [./graph/QC_cutoff_freq_vs_cor.png](./graph/QC_cutoff_freq_vs_cor.png)
-      - [./graph/QC_cutoff_freq_vs_variant_num.png](./graph/QC_cutoff_freq_vs_variant_num.png)
-      - [./graph/QC_replicate_cor.png](./graph/QC_replicate_cor.png)
+      - [./graph/QC_cutoff_freq_vs_cor.png](./graph/QC_cutoff_freq_vs_cor.png)<br />
+      - [./graph/QC_cutoff_freq_vs_variant_num.png](./graph/QC_cutoff_freq_vs_variant_num.png)<br />
+      - [./graph/QC_replicate_cor.png](./graph/QC_replicate_cor.png)<br />
     
       
