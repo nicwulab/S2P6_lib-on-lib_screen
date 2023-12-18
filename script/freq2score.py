@@ -25,8 +25,7 @@ def get_norm_binding_score(df, rep):
     neg_ctrl_pep = 'DSAKEALDKYFKNH'
     sars2_pep    = 'DSFKEELDKYFKNH'
     s2p6_wt = 'QIVHLL-MMRN'
-    neg_ctrl_df = df[df['SH_pep'] == neg_ctrl_pep]
-    #print(neg_ctrl_df)
+    neg_ctrl_df = df[(df['SH_pep'] == neg_ctrl_pep) & (df['totalfreq']>0.00001)]
     avg_neg_ctrl_binding_score = neg_ctrl_df[rep + '_binding_score'].mean()
     print(avg_neg_ctrl_binding_score)
     s2p6_wt_to_sars2_binding_df = df[(df['SH_pep'] == sars2_pep) & (df['mut_ID'] == s2p6_wt)]
@@ -45,7 +44,6 @@ def main():
   inputfiles = glob.glob('result/mut_freq*.tsv')
   for inputfile in inputfiles:
     outfile = inputfile.replace('_freq', '_scores')
-    #freq_cutoff = 0.00001
     freq_df = pd.read_csv(inputfile, sep = '\t')
 
     
