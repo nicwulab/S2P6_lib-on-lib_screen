@@ -66,7 +66,7 @@ def main():
   start_time = time.time()
   barcode_file = 'data/barcode_count_info.tsv' 
   outfile = 'result/mut_freq_2*10-5.tsv'
-  inputfile = 'result/mut_count_aa.tsv'
+  inputfile = 'result/mut_count.tsv'
 
   freq_cutoff = 0.00002
   input_df = pd.read_csv(inputfile, sep='\t')

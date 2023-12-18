@@ -3,7 +3,7 @@ import plotly.offline as pyo
 import pandas as pd
 
 
-df = pd.read_csv('result/mut_scores.tsv', sep='\t')
+df = pd.read_csv('result/mut_scores_2*10-5.tsv', sep='\t')
 
 correlation = df['Rep1_exp_score'].corr(df['Rep2_exp_score'])
 
@@ -35,10 +35,10 @@ layout = go.Layout(title='Expression correlation',
     ])
 fig = go.Figure(data=data, layout=layout)
 
-pyo.plot(fig, filename='graph/QC/Expression_score_correlation.html')
+pyo.plot(fig, filename='graph/QC/Expression_score_correlation_2*10-5.html')
 
 
-correlation = df['Rep1_binding_score'].corr(df['Rep2_binding_score'])
+correlation = df['Rep1_norm_binding_score'].corr(df['Rep2_norm_binding_score'])
 
 hovertext = ['<br>'.join(['SH_pep: ' + str(shpep),
                   'S2P6 mut: ' + str(s2p6_mut),
@@ -46,7 +46,7 @@ hovertext = ['<br>'.join(['SH_pep: ' + str(shpep),
                   'Rep2 expression: ' + str(rep2_enrich),]
                     )
       for shpep, s2p6_mut, rep1_enrich, rep2_enrich in zip(df['SH_pep'], df['mut_ID'], df['Rep1_binding_score'],df['Rep2_binding_score'])]
-trace = go.Scatter(x=df['Rep1_binding_score'], y=df['Rep2_binding_score'], mode='markers', hovertext=hovertext)
+trace = go.Scatter(x=df['Rep1_norm_binding_score'], y=df['Rep2_norm_binding_score'], mode='markers', hovertext=hovertext)
 data = [trace]
 layout = go.Layout(title='Binding correlation',
             xaxis=dict(title='Rep1 binding'),
@@ -68,4 +68,4 @@ layout = go.Layout(title='Binding correlation',
     ])
 fig = go.Figure(data=data, layout=layout)
 
-pyo.plot(fig, filename='graph/QC/Binding_score_correlation_1*10-5.html')
+pyo.plot(fig, filename='graph/QC/Binding_score_correlation_2*10-5.html')
