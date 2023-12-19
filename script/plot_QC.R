@@ -72,6 +72,6 @@ plot_freq_cutoff_vs_cor(mutate(df_freq, param=n), 'graph/QC_cutoff_freq_vs_varia
 plot_freq_cutoff_vs_cor(mutate(df_freq, param=cors), 'graph/QC_cutoff_freq_vs_cor.png', 'correlation between replicates')
 
 df <- df %>%
-        filter(totalfreq > 0.000015) %>%
+        filter(totalfreq > 0.00001) %>%
         mutate(rep1=Rep1_norm_binding_score, rep2=Rep2_norm_binding_score)
 plot_replicate_cor(df, 'graph/QC_replicate_cor.png')

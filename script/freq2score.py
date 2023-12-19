@@ -62,6 +62,8 @@ def main():
   print(len(freq_df))
 
   cols = ['SH_pep', 'mut_ID', 'totalfreq', 'Rep1_t1_freq', 'Rep2_t1_freq',
+          'Rep1_t1_gate1_count','Rep1_t1_gate2_count','Rep1_t1_gate3_count','Rep1_t1_gate4_count',
+          'Rep2_t1_gate1_count','Rep2_t1_gate2_count','Rep2_t1_gate3_count','Rep2_t1_gate4_count',
 	  'Rep1_exp_score', 'Rep1_exp_pos/neg', 'Rep2_exp_score', 'Rep2_exp_pos/neg', 'Rep1_binding_score', 'Rep2_binding_score',
 	  'Rep1_norm_binding_score', 'Rep2_norm_binding_score', 'avg_norm_binding_score']
   
