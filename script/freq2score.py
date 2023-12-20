@@ -1,5 +1,11 @@
 import glob
 import pandas as pd
+import string
+import operator
+
+def hamming(str1, str2):
+    assert len(str1) == len(str2)
+    return sum(map(operator.ne, str1, str2))
 
 def get_expression_score(df, rep):
     exp_weight = df[rep+'_t0_gate1_freq']*0.25 + df[rep+'_t0_gate2_freq']*0.5 + \
@@ -24,7 +30,7 @@ def get_binding_score(df, rep):
 def get_norm_binding_score(df, rep):
     neg_ctrl_pep = 'DSAKEALDKYFKNH'
     sars2_pep    = 'DSFKEELDKYFKNH'
-    s2p6_wt = 'QIVHLL-MMRN'
+    s2p6_wt  = 'QIVHLL-MMRN'
     neg_ctrl_df = df[(df['SH_pep'] == neg_ctrl_pep) & (df['totalfreq']>0.00006)]
     avg_neg_ctrl_binding_score = neg_ctrl_df[rep + '_binding_score'].mean()
     print(avg_neg_ctrl_binding_score)
@@ -33,18 +39,30 @@ def get_norm_binding_score(df, rep):
     print(s2p6_wt_to_sars2_binding_df)
     s2p6_wt_to_sars2_binding_score = s2p6_wt_to_sars2_binding_df.loc[0, rep+'_binding_score']
     print(s2p6_wt_to_sars2_binding_score)
-    df[rep + '_norm_binding_score'] = (df[rep + '_binding_score'] - avg_neg_ctrl_binding_score) / (s2p6_wt_to_sars2_binding_score - avg_neg_ctrl_binding_score)
+    df[rep + '_norm_binding_score'] = (df[rep + '_binding_score'] - avg_neg_ctrl_binding_score) / \
+                                      (s2p6_wt_to_sars2_binding_score - avg_neg_ctrl_binding_score)
     return df
 
 def get_norm_binding_avg(df):
     df['avg_norm_binding_score'] = (df['Rep1_norm_binding_score'] + df['Rep2_norm_binding_score'])/2
     return df
 
-def main():
-  inputfile = 'result/mut_freq.tsv'
-  outfile = 'result/mut_scores.tsv'
-  freq_df = pd.read_csv(inputfile, sep = '\t')
+def compute_dist_to_UCA(df):
+  s2p6_uca = 'YMGSMV-LTSS'
+  df['dist_from_UCA'] = df['mut_ID'].apply(lambda x: hamming(x, s2p6_uca))
+  return df
 
+def seq_to_virus_name(infile):
+  datasheet = pd.read_excel(infile, sheet_name='Sheet1')
+  return datasheet.set_index('stem peptide sequence')['ID'].to_dict()
+
+def main():
+  inputfile  = 'result/mut_freq.tsv'
+  outfile    = 'result/mut_scores.tsv'
+  virusfile  = 'doc/SP_virus_list.xlsx'
+  virus_dict = seq_to_virus_name(virusfile)
+
+  freq_df = pd.read_csv(inputfile, sep = '\t')
   
   freq_df = get_expression_score(freq_df, 'Rep1')
   freq_df = get_expression_score(freq_df, 'Rep2')
@@ -59,9 +77,12 @@ def main():
   freq_df = get_norm_binding_score(freq_df, 'Rep2')
   freq_df = get_norm_binding_avg(freq_df)
 
+  freq_df = compute_dist_to_UCA(freq_df)
+  freq_df['virus'] = freq_df['SH_pep'].map(virus_dict)
+
   print(len(freq_df))
 
-  cols = ['SH_pep', 'mut_ID', 'totalfreq', 'Rep1_t1_freq', 'Rep2_t1_freq',
+  cols = ['SH_pep', 'virus', 'mut_ID', 'dist_from_UCA', 'totalfreq', 'Rep1_t1_freq', 'Rep2_t1_freq',
           'Rep1_t1_gate1_count','Rep1_t1_gate2_count','Rep1_t1_gate3_count','Rep1_t1_gate4_count',
           'Rep2_t1_gate1_count','Rep2_t1_gate2_count','Rep2_t1_gate3_count','Rep2_t1_gate4_count',
 	  'Rep1_exp_score', 'Rep1_exp_pos/neg', 'Rep2_exp_score', 'Rep2_exp_pos/neg', 'Rep1_binding_score', 'Rep2_binding_score',
