@@ -19,7 +19,7 @@ require(cowplot)
 plot_replicate_cor <- function(df, graphname){
   print (paste('correlation for:', graphname, cor(df$rep1, df$rep2)))
   print (paste('# of variants:', length(df$rep1)))
-  textsize <- 7
+  textsize <- 8
   p <- ggplot(df,aes(x=rep1, y=rep2)) +
     geom_point(size=0.1, alpha=0.3, color='grey30', pch=16) +
     theme_cowplot(12) +
@@ -37,8 +37,8 @@ plot_replicate_cor <- function(df, graphname){
 }
 
 plot_freq_cutoff_vs_cor <- function(df, graphname, ylab){
-  textsize <- 7
-  p <- ggplot(df,aes(x=freqs, y=param)) +
+  textsize <- 8
+  p <- ggplot(df,aes(x=freqs*100, y=param)) +
     geom_point(size=1, alpha=1, color='black', pch=16) +
     theme_cowplot(12) +
     theme(plot.title=element_blank(),
@@ -50,12 +50,13 @@ plot_freq_cutoff_vs_cor <- function(df, graphname, ylab){
           legend.title=element_text(size=textsize,face="bold"),
           legend.text=element_text(size=textsize,face="bold"),
           legend.position='right') +
-    labs(x='cutoff frequency',y=ylab)
-  ggsave(graphname, p, height=3, width=3, dpi=600)
+    labs(x='cutoff frequency (%)',y=ylab) +
+    scale_x_continuous(breaks=c(0,0.005, 0.01), labels=c('0','0.005','0.01'))
+  ggsave(graphname, p, height=2, width=2, dpi=600)
 }
 
 freq_analysis <- function(df){
-  freqs <- seq(0,0.0001,0.000005)
+  freqs <- seq(0,0.0001,0.000002)
   cors  <- c()
   n <- c()
   for (freq in freqs){
@@ -68,7 +69,7 @@ freq_analysis <- function(df){
 
 df <- read_tsv('result/mut_scores.tsv')
 df_freq <- freq_analysis(df)
-plot_freq_cutoff_vs_cor(mutate(df_freq, param=n), 'graph/QC_cutoff_freq_vs_variant_num.png', '# of variants')
+plot_freq_cutoff_vs_cor(mutate(df_freq, param=n/1000), 'graph/QC_cutoff_freq_vs_variant_num.png', '# of variants (x1000)')
 plot_freq_cutoff_vs_cor(mutate(df_freq, param=cors), 'graph/QC_cutoff_freq_vs_cor.png', 'correlation between replicates')
 
 df <- df %>%

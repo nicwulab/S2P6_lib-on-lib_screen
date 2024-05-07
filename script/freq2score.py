@@ -19,6 +19,10 @@ def get_expression_pos_neg(df, rep):
     df[rep+'_exp_pos/neg'] = df[rep+'_exp_pos_freq']/df[rep+'_exp_neg_freq']
     return df
 
+def get_expression_avg(df):
+    df['avg_exp_score'] = (df['Rep1_exp_score'] + df['Rep2_exp_score'])/2
+    return df
+
 def get_binding_score(df, rep):
     binding_weight = df[rep+'_t1_gate1_freq']*0.25 + df[rep+'_t1_gate2_freq']*0.5 + \
                  df[rep+'_t1_gate3_freq']*0.75  + df[rep+'_t1_gate4_freq']*1
@@ -66,6 +70,7 @@ def main():
   
   freq_df = get_expression_score(freq_df, 'Rep1')
   freq_df = get_expression_score(freq_df, 'Rep2')
+  freq_df = get_expression_avg(freq_df)
 
   freq_df =  get_expression_pos_neg(freq_df, 'Rep1')
   freq_df =  get_expression_pos_neg(freq_df, 'Rep2')
@@ -86,13 +91,11 @@ def main():
           'Rep1_t1_gate1_count','Rep1_t1_gate2_count','Rep1_t1_gate3_count','Rep1_t1_gate4_count',
           'Rep2_t1_gate1_count','Rep2_t1_gate2_count','Rep2_t1_gate3_count','Rep2_t1_gate4_count',
 	  'Rep1_exp_score', 'Rep1_exp_pos/neg', 'Rep2_exp_score', 'Rep2_exp_pos/neg', 'Rep1_binding_score', 'Rep2_binding_score',
-	  'Rep1_norm_binding_score', 'Rep2_norm_binding_score', 'avg_norm_binding_score']
+	  'Rep1_norm_binding_score', 'Rep2_norm_binding_score', 'avg_exp_score', 'avg_norm_binding_score']
   
   freq_df = freq_df[cols]
   freq_df = freq_df.fillna(0)
   freq_df.to_csv(outfile, sep="\t", index = False)
-
-
 
 if __name__ == "__main__":
   main()
