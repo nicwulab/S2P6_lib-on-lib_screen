@@ -19,7 +19,7 @@ require(cowplot)
 plot_bind_vs_exp <- function(df, graphname){
   print (paste('correlation for:', graphname, cor(df$avg_exp_score, df$avg_norm_binding_score)))
   print (paste('# of variants:', length(df$avg_exp_score)))
-  textsize <- 8
+  textsize <- 9
   p <- ggplot(df,aes(x=avg_exp_score, y=avg_norm_binding_score)) +
     geom_point(size=0.1, alpha=0.3, color='grey30', pch=16) +
     theme_cowplot(12) +
@@ -33,13 +33,13 @@ plot_bind_vs_exp <- function(df, graphname){
           legend.text=element_text(size=textsize,face="bold"),
           legend.position='right') +
     labs(x='Expression score',y='Binding score')
-  ggsave(graphname, p, height=2, width=2, dpi=600)
+  ggsave(graphname, p, height=2.5, width=2.5, dpi=600)
 }
 
-plot_histogram <- function(df, xmin, xmax, xlab, graphname){
-  textsize <- 8
+plot_histogram <- function(df, binw, xmin, xmax, xlab, graphname){
+  textsize <- 9
   p <- ggplot(df,aes(x=param)) +
-    geom_histogram(binwidth=0.1, fill='grey30', alpha=0.3, color='black') +
+    geom_histogram(binwidth=binw, fill='grey30', alpha=0.3, color='black') +
     theme_cowplot(12) +
     theme(plot.title=element_text(size=textsize,face="bold",hjust=0.5),
           plot.background = element_rect(fill = "white"),
@@ -51,13 +51,13 @@ plot_histogram <- function(df, xmin, xmax, xlab, graphname){
           legend.text=element_text(size=textsize,face="bold"),
           legend.position='right') +
     xlim(xmin, xmax) +
-    labs(x=xlab,y='Count')
-  ggsave(graphname, p, height=2, width=2, dpi=600)
+    labs(x=xlab,y='# of variants')
+  ggsave(graphname, p, height=2.5, width=2.5, dpi=600)
   }
 
 df <- read_tsv('result/mut_scores.tsv') %>%
         filter(totalfreq > 0.00001)
 plot_bind_vs_exp(df, 'graph/bind_vs_exp.png')
 
-plot_histogram(mutate(df,param=avg_exp_score), 0, 1.1, 'Expression score', 'graph/hist_exp.png')
-plot_histogram(mutate(df,param=avg_norm_binding_score), -1.2, 1.5, 'Binding score', 'graph/hist_bind.png')
+plot_histogram(mutate(df,param=avg_exp_score), 0.05, 0, 1.1, 'Expression score', 'graph/hist_exp.png')
+plot_histogram(mutate(df,param=avg_norm_binding_score), 0.1, -1.2, 1.5, 'Binding score', 'graph/hist_bind.png')

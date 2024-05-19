@@ -19,7 +19,7 @@ require(cowplot)
 plot_replicate_cor <- function(df, graphname){
   print (paste('correlation for:', graphname, cor(df$rep1, df$rep2)))
   print (paste('# of variants:', length(df$rep1)))
-  textsize <- 8
+  textsize <- 9
   p <- ggplot(df,aes(x=rep1, y=rep2)) +
     geom_point(size=0.1, alpha=0.3, color='grey30', pch=16) +
     theme_cowplot(12) +
@@ -33,11 +33,11 @@ plot_replicate_cor <- function(df, graphname){
           legend.text=element_text(size=textsize,face="bold"),
           legend.position='right') +
     labs(x='Binding score (replicate 1)',y='Binding score (replicate 2)')
-  ggsave(graphname, p, height=2, width=2, dpi=600)
+  ggsave(graphname, p, height=2.5, width=2.5, dpi=600)
 }
 
 plot_freq_cutoff_vs_cor <- function(df, graphname, ylab){
-  textsize <- 8
+  textsize <- 9
   p <- ggplot(df,aes(x=freqs*100, y=param)) +
     geom_point(size=1, alpha=1, color='black', pch=16) +
     theme_cowplot(12) +
@@ -76,3 +76,8 @@ df <- df %>%
         filter(totalfreq > 0.00001) %>%
         mutate(rep1=Rep1_norm_binding_score, rep2=Rep2_norm_binding_score)
 plot_replicate_cor(df, 'graph/QC_replicate_cor.png')
+
+for (pep in c('PYFKEELDQWFKNQ','PDFKEELDQWFKNQ','PDFKEELDKWFKNQ','SDFESELSHWFKNQ','PDFKEELYQWFKNQ','PDFQKELDKWFVNK','PDFKEELNQWFKNQ','DSFKEELDKYFKNH','DSFKQELDKYFKNH','ESFKQELDKYFKNH','DSFKDELDKYFKNH','VDFKDELEEFFKNI','IDFQDELDEFFKNV','TDFKDELDEFFKNV','LDFKEELEEFFKNV','VDFKDELEEFFKNV','SDFKDELEEFFKNV','FNFTEEFEKWYVNQ','FNFDAEFDKYFKNQ','YDFTEEFNKWYKNH','YNFTEEFNKWYKNH','YDFQKEFDKFYKNL','FNFTAEFDKWYKNH','FDFEEEFNKWYKNH','NNFDEEFNKFYKNL','EDFKQELEEIRKNF','QDFMHELEEIRKNL','DSAKEALDKYFKNH')){
+  df_pep <- filter(df, SH_pep == pep)
+  print (cor(df_pep$rep1, df_pep$rep2))
+  }
