@@ -1,6 +1,6 @@
 ## Library-on-library screen of betacoronavirus stem helix peptides vs S2P6 mutants
 
-### Obejctives
+### Obejctive
 Studying the evolutionary trajectories of S2P6 for breadth expansion using a library-on-library screen that involves 27 unique betacoronavirus stem helix peptides and 1,024 S2P6 variants.
 
 ### Dependencies
