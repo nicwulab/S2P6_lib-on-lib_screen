@@ -17,7 +17,7 @@ Studying the evolutionary trajectories of S2P6 for breadth expansion using a lib
 
 ### Linking barcodes to variants based on PacBio sequencing data
 1. Identify the sequences of stem helix peptide, S2P6 variant, and barcode in each read   
-``python3 script/PacBio_fasta2seq.py``<br />
+``python3 script/PacBio_fastq2seq.py``<br />
     - Input file:<br />
       - Fastq file from the PacBio sequencing
     - Output file:<br />
