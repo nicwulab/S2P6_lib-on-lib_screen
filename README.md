@@ -12,7 +12,7 @@ Studying the evolutionary trajectories of S2P6 for breadth expansion using a lib
 ### Input files
 * [./Fasta/SH_pep_ref.fa](./Fasta/SH_pep_ref.fa): A list of stem helix peptides in this experiment
 * [./data/file_names.tsv](./data/file_names.tsv): Filenames for the merged read files
-* Raw PacBio seqeucing data in fastq format from NIH SRA database [BioProject PRJNAXXXXXX](https://www.ncbi.nlm.nih.gov/bioproject/PRJNAXXXXXX)
+* Raw PacBio seqeucing data in fastq format from NIH SRA database [BioProject PRJNA1113356](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1113356)
 * Raw Illumina seqeucing data in fastq format from NIH SRA database [BioProject PRJNAXXXXXX](https://www.ncbi.nlm.nih.gov/bioproject/PRJNAXXXXXX)
 
 ### Linking barcodes to variants based on PacBio sequencing data
