@@ -75,7 +75,7 @@ def extract_info_from_fasta(fasta_file, barcode_spacer, AAQPA_linker, post_SH_li
   outfile = open(outfile, 'w')
   outfile.write("\t".join(['barcode', 'SH_pep', 'mutID'])+"\n")
   count_record = 0
-  for record in SeqIO.parse(fasta_file, "fasta"):
+  for record in SeqIO.parse(fasta_file, "fastq"):
     count_record += 1
     if count_record % 200000==0:
       print ('processed %s reads' % count_record)
@@ -97,7 +97,7 @@ def extract_info_from_fasta(fasta_file, barcode_spacer, AAQPA_linker, post_SH_li
 
 def main():
   outfile = 'data/barcode_SHpep_mutID.tsv'
-  fasta_file = 'data/S2P6_lib_amplicon-for-rev.fasta'
+  fasta_file = 'fastq/S2P6_lib_amplicon-for-rev.fastq'
   barcode_spacer = 'CTACGTTCAAGGCTATGCATCG'
   AAQPA_linker   = 'GCGGCCCAGCCGGCC'
   gs_linker = 'GGCGGAGGTGGGAGTGGAGGAGGCGGTTCTGGTTCAGGTGGCGGAGGTTCC'

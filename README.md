@@ -12,14 +12,14 @@ Studying the evolutionary trajectories of S2P6 for breadth expansion using a lib
 ### Input files
 * [./Fasta/SH_pep_ref.fa](./Fasta/SH_pep_ref.fa): A list of stem helix peptides in this experiment
 * [./data/file_names.tsv](./data/file_names.tsv): Filenames for the merged read files
-* Raw PacBio seqeucing data in fasta format from NIH SRA database [BioProject PRJNAXXXXXX](https://www.ncbi.nlm.nih.gov/bioproject/PRJNAXXXXXX)
+* Raw PacBio seqeucing data in fastq format from NIH SRA database [BioProject PRJNAXXXXXX](https://www.ncbi.nlm.nih.gov/bioproject/PRJNAXXXXXX)
 * Raw Illumina seqeucing data in fastq format from NIH SRA database [BioProject PRJNAXXXXXX](https://www.ncbi.nlm.nih.gov/bioproject/PRJNAXXXXXX)
 
 ### Linking barcodes to variants based on PacBio sequencing data
 1. Identify the sequences of stem helix peptide, S2P6 variant, and barcode in each read   
 ``python3 script/PacBio_fasta2seq.py``<br />
     - Input file:<br />
-      - Fasta file from the PacBio sequencing
+      - Fastq file from the PacBio sequencing
     - Output file:<br />
       - data/barcode\_SHpep\_mutID.tsv
 
